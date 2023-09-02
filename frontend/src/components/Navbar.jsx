@@ -1,19 +1,15 @@
 import { Box, Button, Flex, Link, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+
 import { Link as RouterLink } from "react-router-dom";
+import useAuth from "../store/auth";
 
 const Navbar = () => {
-    const [isLogin, setIsLogin] = useState(false);
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        setIsLogin(!!token);
-    }, []);
-
+    const isLogin = useAuth((state) => state.isLogin);
+    const setIsLogin = useAuth((state) => state.setIsLogin);
     const logout = () => {
         localStorage.removeItem("token");
         setIsLogin(false);
     };
-
     return (
         <Flex
             as="nav"

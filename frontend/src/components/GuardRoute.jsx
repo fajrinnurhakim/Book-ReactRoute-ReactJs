@@ -1,17 +1,16 @@
 import { Navigate } from "react-router-dom";
+import useAuth from "../store/auth";
 
 // eslint-disable-next-line react/prop-types
 function GuardRoute({ type, children }) {
-    const token = localStorage.getItem("token");
-    if (!token && type === "private") {
+    const isLogin = useAuth((state) => state.isLogin);
+    if (!isLogin && type === "private") {
         return <Navigate to="/login" />;
     }
 
-    if (token && type === "guest") {
+    if (isLogin && type === "guest") {
         return <Navigate to="/" />;
     }
-
-    
 
     return children;
 }

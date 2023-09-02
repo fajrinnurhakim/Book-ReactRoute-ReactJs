@@ -15,16 +15,19 @@ import {
 import { login } from "../fetch/auth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../store/auth";
 
 function Login() {
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const setIsLogin = useAuth((state) => state.setIsLogin);
 
     const handleSubmit = async () => {
         try {
             await login({ email, password });
+            setIsLogin(true);
             Swal.fire({
                 icon: "success",
                 title: "Login Success",
